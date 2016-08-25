@@ -197,6 +197,10 @@ func (as *AuthServer) Authenticate(ar *authRequest) (bool, error) {
 			glog.Errorf("%s: %s", ar, err)
 			return false, err
 		}
+		// The current time has been added as a parameter since it was unable to format
+		// the log timestamp to print the date in a readable format
+		glog.V(2).Infof("Authentication successful: [time] %s [user] %s [oauth-scopes] %+v",
+			time.Now().Format(time.ANSIC), ar.User, ar.Scopes)
 		return result, nil
 	}
 	// Deny by default.
